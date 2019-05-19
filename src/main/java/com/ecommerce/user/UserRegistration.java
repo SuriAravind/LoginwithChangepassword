@@ -27,13 +27,8 @@ public class UserRegistration extends HttpServlet {
 	UsersDao userDao=new UsersDao();
 
 	public UserRegistration() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+		 
+	} 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
