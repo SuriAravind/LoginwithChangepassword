@@ -16,10 +16,7 @@
   	<description></description>
   	<servlet-class>com.ecommerce.user.HomePage</servlet-class>
   </servlet>
-  
- 
-  
-  <servlet-mapping>
+ <servlet-mapping>
   	<servlet-name>UserLogin</servlet-name>
   	<url-pattern>/UserLogin</url-pattern>
   </servlet-mapping>
@@ -27,5 +24,4 @@
   	<servlet-name>HomePage</servlet-name>
   	<url-pattern>/HomePage</url-pattern>
   </servlet-mapping>
-  
 </web-app>

@@ -16,5 +16,8 @@ if(session.getAttribute("username")==null)
 %>
 <a href="./logout">Logout</a>
 <a href="changePassword.jsp">Change Password</a>
+<form action="forgotpassword" method="post">
+<input type="submit">
+</form>
 </body>
 </html>
