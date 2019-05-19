@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import Services.UserService;
+
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -42,66 +44,35 @@ public class UserLogin extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Connection con = null; 
-		ResultSet rs = null;
+		UserService userService=new UserService();
 		String uname = request.getParameter("name");
 		String pass = request.getParameter("pass");
-		con = MysqlCon.getConnection();
-		PreparedStatement ps = null;
-		int visit_count = 1;
+		
+		String result="";
 		try {
-			ps = con.prepareStatement("select user_name,user_password,user_lastlogin_time,user_visitcount from user where user_name=? and user_password=?");
-			ps.setString(1, uname);
-			ps.setString(2, pass);
-			rs = ps.executeQuery();
-            
-			while (rs.next()) {
-				HttpSession session = request.getSession();
-				session.setAttribute("username", uname);
-				
-				Timestamp lastLogin = rs.getTimestamp(3);
-				visit_count=rs.getInt(4);
-				if(lastLogin!=null)
-				{
-					LocalDate lastLoginDate = new Date(lastLogin.getTime()).toLocalDate();
-					Date date_current = new Date(System.currentTimeMillis());		
-					logger.info("date->{}"+lastLoginDate.isEqual(date_current.toLocalDate()));
-					if(lastLoginDate.isEqual(date_current.toLocalDate()))
-					{
-						visit_count++;
-					}
-					else
-					{
-						visit_count=1;
-					}
-				}
-				
-				java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-				ps = con.prepareStatement("update user set user_lastlogin_time=?, user_visitcount=? where user_name=?");
-				ps.setTimestamp(1, date);
-				ps.setInt(2,visit_count);
-				ps.setString(3, uname);
-				ps.executeUpdate();
-				response.sendRedirect("HomePage.jsp");
-				return;
-			}
-			request.getSession().removeAttribute("errorMessage");
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
-			return;
+		result = userService.CheckLogin(uname,pass);
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			logger.error(e);
 		}
-		finally
+		if(result.equals("normal")) 
 		{
-			try {
-				rs.close();
-				ps.close();
-				con.close();
-			} catch (SQLException e) {
-				
-				logger.error(e);
-			}
+		HttpSession session = request.getSession();
+		session.setAttribute("username", uname);
+		response.sendRedirect("HomePage.jsp");
+		return;
 		}
-
+		else if(result.equals("mail")) 
+		{
+		HttpSession session = request.getSession();
+		session.setAttribute("username", uname);
+		response.sendRedirect("changePassword.jsp");
+		return;
+		}
+		else
+		{
+			request.getSession().removeAttribute("errorMessage");
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
+		}
 	}
 }

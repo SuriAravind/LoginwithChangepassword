@@ -23,6 +23,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import Services.UserService;
+
 /**
  * Servlet implementation class changePassword
  */
@@ -30,106 +32,56 @@ import com.google.gson.reflect.TypeToken;
 public class changePassword extends HttpServlet {
 	final static Logger logger = Logger.getLogger(UserLogin.class);
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public changePassword() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public changePassword() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	Connection con=null;
-	PreparedStatement ps1 = null;
-	ResultSet rs = null;
-	  Gson converter = new Gson();
-	List<String> myCustomList =new ArrayList<String>(); 
-	JsonParser jp=new JsonParser();
-	String uname=request.getSession().getAttribute("username").toString();
-	String old_password=request.getParameter("oldpassword");
-	String password=request.getParameter("password");
-	String confirmpassword=request.getParameter("confirmpassword");
-	String password_history=""; 
-	if(password.equals(confirmpassword))
-	 {
-		con = MysqlCon.getConnection();
-		try 
-		{
-			ps1=con.prepareStatement("select user_pasword_history from user where user_name=?");
-			ps1.setString(1,uname);
-			rs=ps1.executeQuery();
-			if(rs.next())
-			{
-				password_history=rs.getString(1);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String username = request.getSession().getAttribute("username").toString();
+		String old_password = request.getParameter("oldpassword");
+		String password = request.getParameter("password");
+		String confirmpassword = request.getParameter("confirmpassword");
+		UserService userService = new UserService();
+		int i = 0;
+		i = userService.isUserPassword(username, old_password);
+		if (i == 1) {
+			if (password.equals(confirmpassword)) {
+				userService.updatePasswordhistory(username, password);
+				response.sendRedirect("HomePage.jsp");
+			} else {
+				response.sendRedirect("changePassword.jsp?msg=missmatch_new_password");
 			}
-			if(password_history!=null)
-			{
-				
-			    Type type = new TypeToken<List<String>>(){}.getType();
-			    myCustomList = converter.fromJson(password_history, type ); 
-			    if(myCustomList.contains(password)) 
-			    {
-			    	logger.error("U used one of the existing password");
-			    }
-			    else {
-			    JsonArray jsonArray  = new Gson().toJsonTree(myCustomList).getAsJsonArray();
-                if(jsonArray.size()==3)
-                {
-                	myCustomList.add(0,password);
-            	    myCustomList=myCustomList.subList(0,3);
-                }
-                else
-                {
-                	myCustomList.add(password);
-             
-                }
-			    }
-			}
-			else
-			{
-	          myCustomList.add(password);
-	        }
-		   	password_history=new Gson().toJson(myCustomList).toString();
-			ps1=con.prepareStatement("update user set user_password=?,user_pasword_history=? where user_name=?");
-        	ps1.setString(1,password);
-        	ps1.setString(2,password_history);
-        	ps1.setString(3,uname);
-            ps1.executeUpdate();
-            response.sendRedirect("HomePage.jsp");
-		   
-		  
-        }
-        catch (SQLException e) {
-			logger.error(e);
-	    } 
-		finally 
-		{
-		   try {
-				 con.close();
-				 ps1.close();
-				 rs.close();
-		        } 
-		  catch (SQLException e) 
-		   {
-			logger.error(e);
-		   }
 		}
-     }
-	 else
-	 {
-		response.sendRedirect("changePassword.jsp?msg=missmatch_new_password");
-	 }
-  }
+		if (i == 2) {
+			if (password.equals(confirmpassword)) {
+				userService.updatePasswordhistory(username, password);
+				response.sendRedirect("index.jsp");
+			} else {
+				response.sendRedirect("changePassword.jsp?msg=missmatch_new_password");
+			}
+
+		} else {
+			response.sendRedirect("changePassword.jsp?msg=missmatch_user_password");
+		}
+	}
 }
