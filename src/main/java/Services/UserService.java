@@ -100,7 +100,38 @@ public class UserService
 	   java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 	   usersDao.updatelastLogin_Visitcount(date,visit_count,uname);
 	   return result;	
-	}	
+	}
+
+	public String getUserEmailId(String randomString, String email) {
+	   usersDao.insertTemporarypassword(randomString, email);
+	   String userid=usersDao.getEmailId(email);
+	   return userid;
+	}
+
+	public String getUserName(String randomId) {
+		String username=usersDao.getUserName(randomId);
+		return username;
+	}
+
+	public void updatePasswordbyemail(String uname, String password) {
+		
+		usersDao.updatePasswordbyemail(uname, password);
+	}
+
+	public int createUser(Map<String, String> parameters) 
+	{
+	    int result=0;
+		int i=usersDao.isExist(parameters.get("username"),parameters.get("email"));
+		if(i==0) 
+		{
+		   result=usersDao.createUser(parameters);
+		}
+		else
+		{
+			logger.error("user already exist");
+		}
+	    return i;
+	}
 }
 
 
