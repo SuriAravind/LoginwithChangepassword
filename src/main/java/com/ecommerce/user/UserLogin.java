@@ -52,13 +52,13 @@ public class UserLogin extends HttpServlet {
 		try {
 		result = userService.CheckLogin(uname,pass);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			logger.error(e);
 		}
 		if(result.equals("normal")) 
 		{
 		HttpSession session = request.getSession();
 		session.setAttribute("username", uname);
+		
 		response.sendRedirect("HomePage.jsp");
 		return;
 		}

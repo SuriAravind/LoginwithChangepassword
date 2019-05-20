@@ -7,16 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<% 
-if(session.getAttribute("username")==null)
-{
-	response.sendRedirect("./index.jsp");
-}
- 
-%>
-<form method="post" action="homepage">
-<a href="./logout">Logout</a>
-<a href="changePassword.jsp">Change Password</a>
+<form method="post" action="Forgotpasswordbymailsubmission">
+Change Password<input type="password" name="password"><br>
+Confirm Password<input type="password" name="confirmpassword"><br>
+<input type="submit">
 </form>
 </body>
 </html>

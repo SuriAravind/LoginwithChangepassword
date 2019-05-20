@@ -12,6 +12,8 @@ import org.apache.log4j.Logger;
 
 import com.ecommerce.user.dao.UsersDao;
 
+import Services.UserService;
+
 /**
  * Servlet implementation class forgotpassword
  */
@@ -39,12 +41,12 @@ public class forgotpassword extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String email=request.getParameter("email");
 		SendForgotEmail sendForgotEmail=new SendForgotEmail();
 		String randomString=RandomString.getAlphaNumericString(6);
-		HttpSession session = request.getSession(); 
-		String username =(String) session.getAttribute("username");
-		UsersDao.insertTemporarypassword(randomString, username);
-		sendForgotEmail.send("suriyanarayanan15061998@gmail.com", "narayanan15", "jn.shankarganesh@gmail.com",randomString);
+		UserService userService=new UserService();
+		String userid=userService.getUserEmailId(randomString, email);
+		sendForgotEmail.send("suriyanarayanan15061998@gmail.com", "narayanan15", userid,"http://localhost:8080/ecommerce/ForgotPasswordbyLink?id="+randomString);
+		response.sendRedirect("index.jsp");
 	}
-
 }

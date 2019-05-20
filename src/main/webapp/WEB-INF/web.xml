@@ -16,6 +16,13 @@
   	<description></description>
   	<servlet-class>com.ecommerce.user.HomePage</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ForgotPasswordbyLink</servlet-name>
+  	<display-name>ForgotPasswordbyLink</display-name>
+  	<description></description>
+  	<servlet-class>com.ecommerce.user.Forgotpasswordbymail</servlet-class>
+  </servlet>
+  
  <servlet-mapping>
   	<servlet-name>UserLogin</servlet-name>
   	<url-pattern>/UserLogin</url-pattern>
@@ -24,4 +31,9 @@
   	<servlet-name>HomePage</servlet-name>
   	<url-pattern>/HomePage</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ForgotPasswordbyLink</servlet-name>
+  	<url-pattern>/ForgotPasswordbyLink</url-pattern>
+  </servlet-mapping>
+
 </web-app>

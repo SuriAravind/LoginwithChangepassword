@@ -68,7 +68,8 @@ public class changePassword extends HttpServlet {
 			if (password.equals(confirmpassword)) {
 				userService.updatePasswordhistory(username, password);
 				response.sendRedirect("HomePage.jsp");
-			} else {
+			} 
+			else {
 				response.sendRedirect("changePassword.jsp?msg=missmatch_new_password");
 			}
 		}

@@ -11,8 +11,9 @@
 <div>
 <label> Password </label><input type="password" name="pass"><br>
 </div>
-<input type="submit">&nbsp;<a href="userRegister.jsp">User Register</a>
+<input type="submit" name="submit">&nbsp;<a href="userRegister.jsp">User Register</a>
 </form>
 </div>
+<a href="ForgotPassword.jsp">Forgot Password</a>
 </body>
 </html>
