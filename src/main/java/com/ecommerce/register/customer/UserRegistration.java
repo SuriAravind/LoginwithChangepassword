@@ -1,4 +1,4 @@
-package com.ecommerce.user;
+package com.ecommerce.register.customer;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -12,8 +12,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.ecommerce.user.dao.UsersDao;
-
-import Services.UserService;
+import com.ecommerce.user.services.UserService;
 
 /**
  * Servlet implementation class userRegistration
@@ -54,7 +53,6 @@ public class UserRegistration extends HttpServlet {
 			parameters.put("age", request.getParameter("age"));
 			int result = userService.createUser(parameters);
 			if(result==0) {
-			//response.getWriter().write(userId);
 			response.sendRedirect("index.jsp");
 			}
 			else 

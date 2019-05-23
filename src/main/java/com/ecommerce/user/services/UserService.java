@@ -1,4 +1,4 @@
-package Services;
+package com.ecommerce.user.services;
 
 import java.util.*;
 import java.sql.*;
@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 
 import org.apache.log4j.Logger;
 
-import com.ecommerce.user.UserRegistration;
+import com.ecommerce.register.customer.UserRegistration;
 import com.ecommerce.user.dao.UsersDao;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

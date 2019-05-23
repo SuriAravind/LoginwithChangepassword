@@ -1,4 +1,4 @@
-package com.ecommerce.user;
+package com.ecommerce.user.api;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Services.UserService;
+import com.ecommerce.user.services.UserService;
 
 
 public class Forgotpasswordbymail extends HttpServlet {

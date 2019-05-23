@@ -1,4 +1,4 @@
-package com.ecommerce.user;
+package com.ecommerce.user.api;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,12 +18,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import com.ecommerce.login.consumer.UserLogin;
+import com.ecommerce.user.services.UserService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-
-import Services.UserService;
 
 /**
  * Servlet implementation class changePassword

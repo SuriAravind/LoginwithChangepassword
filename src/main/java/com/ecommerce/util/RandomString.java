@@ -1,9 +1,9 @@
-package com.ecommerce.user;
+package com.ecommerce.util;
 
 public class RandomString { 
 	  
     // function to generate a random string of length n 
-    static String getAlphaNumericString(int n) 
+    public static String getAlphaNumericString(int n) 
     { 
   
         // chose a Character random from this String 

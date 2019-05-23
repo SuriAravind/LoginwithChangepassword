@@ -1,22 +1,20 @@
-package com.ecommerce.user;
+package com.ecommerce.user.api;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import com.ecommerce.user.services.UserService;
+import com.ecommerce.util.RandomString;
+import com.ecommerce.util.SendForgotEmail;
 
-import com.ecommerce.user.dao.UsersDao;
+ 
 
-import Services.UserService;
 
-/**
- * Servlet implementation class forgotpassword
- */
 @WebServlet("/forgotpassword")
 public class forgotpassword extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -46,7 +44,13 @@ public class forgotpassword extends HttpServlet {
 		String randomString=RandomString.getAlphaNumericString(6);
 		UserService userService=new UserService();
 		String userid=userService.getUserEmailId(randomString, email);
+		if(userid.equals(""))
+		{
+			response.sendRedirect("ForgotPassword.jsp?msg=Type_Correct_Email");
+		}
+		else {
 		sendForgotEmail.send("suriyanarayanan15061998@gmail.com", "narayanan15", userid,"http://localhost:8080/ecommerce/ForgotPasswordbyLink?id="+randomString);
 		response.sendRedirect("index.jsp");
-	}
+	    }
+	}	
 }

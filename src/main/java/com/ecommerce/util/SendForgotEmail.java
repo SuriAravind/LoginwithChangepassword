@@ -1,4 +1,4 @@
-package com.ecommerce.user;
+package com.ecommerce.util;
 
 import java.util.Properties;
 import javax.mail.*;
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import com.ecommerce.user.dao.UsersDao;
 
-class SendForgotEmail {
+public class SendForgotEmail { 
 	public  void send(String from, String password, String to, String randomString) {
 		// Get properties object
 		Properties props = new Properties();

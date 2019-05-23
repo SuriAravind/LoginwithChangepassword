@@ -1,4 +1,4 @@
-package com.ecommerce.user;
+package com.ecommerce.user.api;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,25 +8,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Services.UserService;
-
-@WebServlet("/homepage")
-public class HomePage extends HttpServlet {
+/**
+ * Servlet implementation class LogoutServlet
+ */
+@WebServlet("/logout")
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomePage() {
+    public LogoutServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 HttpSession session=request.getSession();  
+         session.invalidate();  
+         response.sendRedirect("index.jsp");
 	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
 	}
+
 }

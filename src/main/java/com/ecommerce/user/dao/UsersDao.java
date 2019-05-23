@@ -4,22 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import org.apache.log4j.Logger;
 
-import com.ecommerce.user.MysqlCon;
-import com.ecommerce.util.QueryPropertyUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
-import com.google.protobuf.Timestamp;
+import com.ecommerce.util.MysqlCon;
 
 public class UsersDao {
 
 	// QueryPropertyUtils queryPropertyUtils = new QueryPropertyUtils();
-	final static Logger logger = Logger.getLogger(QueryPropertyUtils.class);
+	final static Logger logger = Logger.getLogger(UsersDao.class);
 
 	public int createUser(Map<String, String> parameters) {
 		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
@@ -50,8 +44,7 @@ public class UsersDao {
 		}
 		return i;
 	}
-
-	public  void insertTemporarypassword(String password, String email) {
+    public  void insertTemporarypassword(String password, String email) {
 		Connection con = MysqlCon.getConnection();
 		PreparedStatement stmt = null;
 		try {

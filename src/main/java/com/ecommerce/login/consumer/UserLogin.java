@@ -1,4 +1,4 @@
-package com.ecommerce.user;
+package com.ecommerce.login.consumer;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import Services.UserService;
+import com.ecommerce.user.services.UserService;
 
 import java.sql.*;
 import java.time.LocalDate;

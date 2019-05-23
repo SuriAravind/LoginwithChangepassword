@@ -1,4 +1,4 @@
-package com.ecommerce.user;
+package com.ecommerce.util;
 import java.sql.*;
 
 import org.apache.log4j.Logger;
